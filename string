@@ -1,0 +1,145 @@
+
+#include <iostream>
+using namespace std;
+
+class MYString{
+     int size;
+     char* str;
+public:
+
+     MYString(char* a, int n = 0):str(a), size(n) {
+    for (int i = 1; i <= size; i++) {
+    str[i] = a[i];
+    }
+    }
+
+    char operator[] (int i) {
+        return str[i];
+    }
+
+    void get (int i){
+    cout << " Enter new el ";
+    char a;
+    cin >> a;
+    str [i]=a;
+    }
+
+    void print() {
+    for (int i = 1; i <= size; i++) cout << str[i];
+    }
+
+
+
+    friend MYString operator+( MYString &A,  MYString &B);
+    friend bool operator==( MYString &A, MYString &B);
+    friend bool operator!=(MYString &A,  MYString &B);
+    friend bool operator >(MYString &A , MYString &B);
+    friend bool operator <(MYString & A, MYString &B);
+    friend bool StrCmp(MYString&A, MYString &B);
+    friend MYString myname (MYString &A);
+
+    ~MYString() {
+        delete[] str;
+        }
+
+    MYString & operator += (MYString& A){
+    int temp = size + A.size ;
+    for (int i = 1; i <= size; i++) str[i]=str[i];
+    for (int i = size + 1 , j = 1; i <= temp; i++, j++) str[i]= A.str[j];
+    size=temp;
+    return *this;
+    }
+};
+
+
+bool StrCmp(MYString & A, MYString & B){
+    int k=0;
+    for (int i=1;  i <= A.size ; i++) {if (A.str[i] == B.str[i]) k++;
+    }
+    return (k == B.size);
+}
+
+
+MYString myname (MYString &A){
+A.size=24;
+A.str=" PolyakovaJuliaAlekseevna";
+}
+
+MYString operator + (MYString & A, MYString & B){
+    A+=B;
+    return A;
+}
+
+
+bool operator ==( MYString & A, MYString& B){
+    return StrCmp(A,B);
+}
+
+bool operator!=( MYString& A, MYString &B){
+    return !(StrCmp(A,B));
+}
+
+bool operator >( MYString& A, MYString& B){
+    return (A.size > B.size);
+}
+
+bool operator <( MYString &A,  MYString& B){
+    return (A.size < B.size) ;
+}
+
+
+
+
+int main () {
+cout << "Enter size1: ";
+int s;
+cin >> s;
+char a[s];
+cout << "Enter string A: ";
+for (int i=1; i<=s; i++) cin >> a[i];
+MYString A (a,s);
+
+cout << "Enter size2: ";
+int l;
+cin >> l;
+char b[l];
+cout << "Enter string B: ";
+for (int i=1; i<=l; i++) cin >> b[i];
+MYString B (b,l);
+
+B+=A;
+cout << " (B += A) B= ";
+B.print();
+
+MYString temp (a,s);
+MYString C(b,l);
+C = A + B;
+A=temp;
+cout<< endl << " A + B = C =  ";
+C.print();
+
+int i;
+cout << endl << " Enter number of el, which you want to change: ";
+cin >> i;
+C.get(i);
+C.print();
+
+int el;
+cout << endl << " Enter number of element, which you want to get: ";
+cin >> el;
+cout  << endl << " This element is "<< A[el];
+
+cout << endl;
+if (A == B)  cout << " A = B";
+else {
+        if (A < B) cout << " A < B";
+        else cout << " A > B";
+}
+
+cout << endl << "(A = myname) ";
+myname (A);
+A.print();
+
+return 0;
+}
+
