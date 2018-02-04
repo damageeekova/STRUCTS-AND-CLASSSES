@@ -1,0 +1,83 @@
+
+#include <iostream>
+using namespace std;
+
+struct Vector{
+int* Re = new int;
+int* Im = new int;
+int Size;
+
+Vector(int* X, int* Y, int lenght){
+Size = lenght;
+for (int i = 0; i < Size; i++){
+Re[i] = X[i];
+Im[i] = Y[i];
+}
+}
+
+Vector (const Vector &A){
+Size = A.Size;
+Re = A.Re;
+Im = A.Im;
+}
+
+void print() {
+for (int i = 0; i < Size; i++) {
+cout << Re[i] << "+ i*" << Im[i] << endl;
+}
+cout << endl;
+}
+
+int* operator[] (int i) {
+int *new_array = new int[2];
+new_array[0] = Re[i];
+new_array[1] = Im[i];
+return new_array;
+}
+
+~Vector() {
+delete[] Re;
+delete[] Im;
+}
+};
+
+Vector push_back(Vector &A, int X, int Y){
+A.Size++;
+A.Re[A.Size-1] = X;
+A.Im[A.Size-1] = Y;
+return A;
+}
+
+Vector change_size(Vector &A, int L){
+A.Size+=L;
+for (int i = A.Size - L; i < A.Size; i++){
+A.Re[i] = 0;
+A.Im[i] = 0;
+}
+}
+
+void PrInT (int* A){
+cout << A[0] << "+ i*" << A[1] << endl;
+}
+
+int main(){
+int n;
+cout << " Enter number of elements in your vector: ";
+cin >> n;
+int* X = new int [n];
+int* Y = new int [n];
+cout << "Enter Re and Im part for every: ";
+for (int i = 0; i < n; i++){
+cin >> X[i] >> Y[i];
+}
+Vector FIRST(X, Y, n);
+FIRST.print();
+int* x = FIRST[1];
+PrInT(x);
+cout << endl<< "Copy: ";
+Vector SECOND (FIRST);
+SECOND.print ();
+
+
+return 0;
+}
