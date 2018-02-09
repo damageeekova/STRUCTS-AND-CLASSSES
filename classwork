@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+struct Zn {
+
+
+int n;
+int* num;
+int k;
+
+Zn (int n){
+int i = 2;
+cout << n << endl;
+k=0;
+while (n != 1){
+    if (n % i == 0){
+        n=n/i; num[k] = i;  cout << num [k] << " ";k++;
+    }
+    i++;
+}
+}
+
+Zn (Zn &A){
+    k=A.k;
+    n=A.n;
+    for (int i=0; i<k; i++) num [i]=A.num [i];
+
+}
+
+
+ void print() {
+    for (int i = 1; i <= k; i++) cout << num [i];
+    }
+
+
+ Zn & operator += (Zn &A) {
+ n+=A.n;
+ k+=A.k;
+ for (int i=0; i<k; i++) num[i]=num [i];
+ for (int i=k, j=0; i<A.k; i++, j++ ) num [i]=A.num [j];
+ return *this;
+ }
+
+
+};
+
+
+Zn & operator + (Zn &A, Zn &B){
+return (A+=B);
+}
+
+
+int main (){
+int h=15;
+Zn a(h);
+a.print() ;
+return 0;
+}
